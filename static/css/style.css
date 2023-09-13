@@ -1,0 +1,11 @@
+body{
+    min-width: 372px;
+    
+}
+
+
+footer {
+    
+    bottom: 0;
+    width: 100%;           /* altura do rodapé */
+}
