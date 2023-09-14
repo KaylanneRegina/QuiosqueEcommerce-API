@@ -1,5 +1,5 @@
 from django.db import models
-
+from .categoria import Categoria
 # Create your models here.
 
 class Produto(models.Model):
@@ -7,6 +7,7 @@ class Produto(models.Model):
     nome_produto = models.CharField(max_length=30)
     descricao = models.TextField()
     valor = models.DecimalField(max_digits=5, decimal_places=2)
+    categoria = models.ForeignKey(Categoria, blank=True, null=True , on_delete=models.PROTECT)
     foto = models.ImageField(null=True, blank=True, upload_to='img_produtos', default='img_produtos/skol.png')
 
     def __str__(self):

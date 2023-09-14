@@ -1,23 +1,25 @@
+from bar import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from produtos.views import home, produto
+from rest_framework.routers import DefaultRouter
 from usuarios.views import login, cadastro, contato
 from carrinho.views import carrinho
-from produtos.views import produto
-from produtos.api import listarProdutos, detalharProduto
+from produtos.views.produto_view import home, produto
+from produtos.views import produto_view
+from produtos.api.produto import ProdutoViewSet
+# from produtos.api import listarProdutoViewSet
 
-from django.conf.urls.static import static
-from bar import settings
-
+routers = DefaultRouter()
+routers.register(r'produtos', ProdutoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('produto/', include('produtos.urls')),
+    path('produto/', produto, name='produto'),
     path('usuarios/', include('usuarios.urls')),
     path('carrinho/', carrinho, name='carrinho'),
-    path('api/produtos/', listarProdutos),
-    path('api/produtos/<int:id>/', detalharProduto)
+    path('api/', include(routers.urls)),
     ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
